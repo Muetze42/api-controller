@@ -67,9 +67,9 @@ trait ControllerMorphTrait
         if (!is_null($this->gate) && method_exists($this->gate, 'add'.$check)) {
             $this->authorize('add'.$check, $model);
         }
-        if (!is_null($this->gate) && method_exists($this->gate, 'update')) {
-            $this->authorize('update', $model);
-        }
+//        if (!is_null($this->gate) && method_exists($this->gate, 'update')) {
+//            $this->authorize('update', $model);
+//        }
 
         $request->validate($this->addValidationRules());
 
