@@ -9,11 +9,6 @@ use Illuminate\Support\Str;
 trait ControllerMorphTrait
 {
     /**
-     * @var string
-     */
-    protected string $addAction = 'firstOrCreate';
-
-    /**
      * This action is performed before the update request
      *
      * @param Request $request
@@ -83,6 +78,6 @@ trait ControllerMorphTrait
             $only = $model->{$relation}()->getRelated()->getFillable();
         }
 
-        return $model->{$relation}()->{$this->addAction}($request->only($only));
+        return $model->{$relation}()->create($request->only($only));
     }
 }
