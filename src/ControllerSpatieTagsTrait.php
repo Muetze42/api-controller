@@ -5,7 +5,6 @@ namespace NormanHuth\ApiController;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
-use Spatie\Tags\Tag;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
@@ -132,10 +131,10 @@ trait ControllerSpatieTagsTrait
     protected function getTagsArray(Request $request, ?string $tags): array
     {
         if (empty($tags)) {
-            $request->validate(['data' => 'required']);
+            $request->validate(['tags' => 'required']);
         }
 
-        $tags = !empty($tags) ? $tags : $request->input('data');
+        $tags = !empty($tags) ? $tags : $request->input('tags');
         if (is_string($tags)) {
             $tags = isJson($tags) ? json_decode($tags, true) : [$tags];
         }
