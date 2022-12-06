@@ -32,6 +32,11 @@ trait ControllerIndexTrait
     protected array $makeVisibleIndex = [];
 
     /**
+     * @var array
+     */
+    protected array $autoloadRelationsIndex = [];
+
+    /**
      * @param Builder $query
      * @param Request $request
      * @return Builder
@@ -117,7 +122,10 @@ trait ControllerIndexTrait
             }
         }
 
-        return $array;
+        return array_merge($array, [
+            $this->autoloadRelations,
+            $this->autoloadRelationsIndex
+        ]);
     }
 
     /**

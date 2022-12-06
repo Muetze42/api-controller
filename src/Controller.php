@@ -65,6 +65,11 @@ class Controller extends BaseController
     protected array $makeVisible = [];
 
     /**
+     * @var array
+     */
+    protected array $autoloadRelations = [];
+
+    /**
      * Per Page Limit
      *
      * @var int|null

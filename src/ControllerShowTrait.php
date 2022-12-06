@@ -22,6 +22,11 @@ trait ControllerShowTrait
     protected array $makeVisibleShow = [];
 
     /**
+     * @var array
+     */
+    protected array $autoloadRelationsShow = [];
+
+    /**
      * @param Request $request
      * @param $primaryValue
      * @return mixed
@@ -94,6 +99,9 @@ trait ControllerShowTrait
             }
         }
 
-        return $array;
+        return array_merge($array, [
+            $this->autoloadRelations,
+            $this->autoloadRelationsShow
+        ]);
     }
 }
