@@ -80,8 +80,7 @@ trait ControllerMorphTrait
 
         $only = $this->morphOnly();
         if (empty($only)) {
-            $class = $model->{$relation}()->getMorphClass();
-            $only = (new ($class))->getFillable();
+            $only = $model->{$relation}()->getRelated()->getFillable();
         }
 
         return $model->{$relation}()->{$this->addAction}($request->only($only));
