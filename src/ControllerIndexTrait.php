@@ -70,8 +70,8 @@ trait ControllerIndexTrait
 
     /**
      * @param Request $request
-     * @return mixed
      * @throws AuthorizationException
+     * @return mixed
      */
     public function index(Request $request): mixed
     {
@@ -122,10 +122,11 @@ trait ControllerIndexTrait
             }
         }
 
-        return array_filter(array_merge($array, [
+        return array_merge(
+            $array,
             $this->autoloadRelations,
             $this->autoloadRelationsIndex
-        ]));
+        );
     }
 
     /**

@@ -99,9 +99,10 @@ trait ControllerShowTrait
             }
         }
 
-        return array_filter(array_merge($array, [
+        return array_merge(
+            $array,
             $this->autoloadRelations,
             $this->autoloadRelationsShow
-        ]));
+        );
     }
 }
