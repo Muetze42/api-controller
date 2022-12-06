@@ -111,11 +111,17 @@ trait ControllerSpatieTagsTrait
     {
         $model = $this->getSpatieTagModel($request, $primaryValue);
 
-        if (!is_null($this->gate) && method_exists($this->gate, 'attachTag')) {
-            $this->authorize('attachTag', $model);
-        }
         if (!is_null($this->gate) && method_exists($this->gate, 'detachTag')) {
-            $this->authorize('detachTag', $model);
+            $this->authorize('detachTag', $this->model);
+        }
+        if (!is_null($this->gate) && method_exists($this->gate, 'attachTag')) {
+            $this->authorize('attachTag', $this->model);
+        }
+        if (!is_null($this->gate) && method_exists($this->gate, 'addTag')) {
+            $this->authorize('addTag', $this->model);
+        }
+        if (!is_null($this->gate) && method_exists($this->gate, 'attachAnyTag')) {
+            $this->authorize('attachAnyTag', $this->model);
         }
 
         $tags = $this->getTagsArray($request, $tags);
