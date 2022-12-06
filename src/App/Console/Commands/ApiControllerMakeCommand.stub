@@ -1,0 +1,63 @@
+<?php
+
+namespace NormanHuth\ApiController\App\Console\Commands;
+
+use Illuminate\Console\GeneratorCommand;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
+use Illuminate\Support\Composer;
+use Illuminate\Support\Str;
+use Symfony\Component\Console\Attribute\AsCommand;
+
+#[AsCommand(name: 'make:api:controller')]
+class ApiControllerMakeCommand extends GeneratorCommand
+{
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'make:api:controller';
+
+    /**
+     * The name of the console command.
+     *
+     * This name is used to identify the command during lazy loading.
+     *
+     * @var string|null
+     *
+     * @deprecated
+     */
+    protected static $defaultName = 'make:api:controller';
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Create a new API controller class';
+
+    /**
+     * The type of class being generated.
+     *
+     * @var string
+     */
+    protected $type = 'Controller';
+
+    /**
+     * The Composer instance.
+     *
+     * @var Composer
+     */
+    protected Composer $composer;
+
+    /**
+     * Execute the console command.
+     *
+     * @return int
+     * @throws FileNotFoundException
+     */
+    public function handle(): int
+    {
+
+    }
+}

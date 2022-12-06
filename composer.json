@@ -1,0 +1,34 @@
+{
+    "name": "norman-huth/api-controller",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "NormanHuth\\ApiController\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Norman Huth",
+            "homepage": "https://huth.it"
+        }
+    ],
+    "require": {
+        "php": "^8.0",
+        "illuminate/auth": "^8.0|^9.0",
+        "illuminate/bus": "^8.0|^9.0",
+        "illuminate/collections": "^8.0|^9.0",
+        "illuminate/config": "^8.0|^9.0",
+        "illuminate/pagination": "^8.0|^9.0",
+        "illuminate/support": "^8.0|^9.0",
+        "illuminate/translation": "^8.0|^9.0",
+        "illuminate/validation": "^8.0|^9.0",
+        "norman-huth/helpers-collection-php": "^1.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "NormanHuth\\ApiController\\ServiceProvider"
+            ]
+        }
+    }
+}
