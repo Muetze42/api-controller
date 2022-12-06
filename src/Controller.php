@@ -15,6 +15,7 @@ class Controller extends BaseController
     use AuthorizesRequests,
         DispatchesJobs,
         ValidatesRequests,
+        ControllerMorphTrait,
         ControllerAttachTrait,
         ControllerDeleteTrait,
         ControllerSpatieTagsTrait,
