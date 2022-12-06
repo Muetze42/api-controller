@@ -124,11 +124,11 @@ trait ControllerSpatieTagsTrait
 
     /**
      * @param Request $request
-     * @param string|null $tags
+     * @param string|array|null $tags
      * @throws Exception
      * @return array
      */
-    protected function getTagsArray(Request $request, ?string $tags): array
+    protected function getTagsArray(Request $request, string|array|null $tags): array
     {
         if (empty($tags)) {
             $request->validate(['tags' => 'required']);
