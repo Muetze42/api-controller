@@ -44,7 +44,9 @@ trait ControllerSpatieTagsTrait
      */
     protected function getSpatieTagModel(Request $request, $primaryValue): Model|Builder
     {
-        $this->model = app($this->model);
+        if (is_string($this->model)) {
+            $this->model = app($this->model);
+        }
 
         if (!$this->primaryKey) {
             $this->primaryKey = $this->getPrimaryKey();

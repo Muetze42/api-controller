@@ -45,7 +45,9 @@ trait ControllerDeleteTrait
         $this->beforeAction($request);
         $this->beforeDestroyAction($request);
 
-        $this->model = app($this->model);
+        if (is_string($this->model)) {
+            $this->model = app($this->model);
+        }
 
         if (!$this->primaryKey) {
             $this->primaryKey = $this->getPrimaryKey();

@@ -33,7 +33,9 @@ trait ControllerAttachTrait
         $this->beforeAction($request);
         $this->beforeAttachAction($request);
 
-        $this->model = app($this->model);
+        if (is_string($this->model)) {
+            $this->model = app($this->model);
+        }
 
         if (!$this->primaryKey) {
             $this->primaryKey = $this->getPrimaryKey();
