@@ -55,12 +55,12 @@ trait ControllerIndexTrait
     {
         $filters = $request->input('filter');
         foreach ($this->indexFilter as $key) {
-            if (isset($filters[$key])) {
+            if (array_key_exists($key, $filters)) {
                 $query = $query->where($key, $filters[$key]);
             }
         }
         foreach ($this->indexLikeFilter as $key) {
-            if (isset($filters[$key])) {
+            if (array_key_exists($key, $filters)) {
                 $query = $query->where($key, 'like', '%'.$filters[$key].'%');
             }
         }
