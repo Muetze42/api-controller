@@ -22,12 +22,12 @@ trait ControllerSpatieTagsTrait
      */
     public function attachSpatieTags(Request $request, $primaryValue, array|string $tags = null): Builder|Model|Collection
     {
-        if (!is_null($this->gate) && method_exists($this->gate, 'addTag')) {
-            $this->authorize('addTag', $this->model);
-        }
-        if (!is_null($this->gate) && method_exists($this->gate, 'attachTag')) {
-            $this->authorize('attachTag', $this->model);
-        }
+//        if (!is_null($this->gate) && method_exists($this->gate, 'addTag')) {
+//            $this->authorize('addTag', $this->model);
+//        }
+//        if (!is_null($this->gate) && method_exists($this->gate, 'attachTag')) {
+//            $this->authorize('attachTag', $this->model);
+//        }
         if (!is_null($this->gate) && method_exists($this->gate, 'attachAnyTag')) {
             $this->authorize('attachAnyTag', $this->model);
         }
@@ -44,8 +44,11 @@ trait ControllerSpatieTagsTrait
      */
     public function detachSpatieTags(Request $request, $primaryValue, array|string|null $tags = null): Builder|Model|Collection
     {
-        if (!is_null($this->gate) && method_exists($this->gate, 'detachTag')) {
-            $this->authorize('detachTag', $this->model);
+//        if (!is_null($this->gate) && method_exists($this->gate, 'detachTag')) {
+//            $this->authorize('detachTag', $this->model);
+//        }
+        if (!is_null($this->gate) && method_exists($this->gate, 'attachAnyTag')) {
+            $this->authorize('attachAnyTag', $this->model);
         }
 
         return $this->handleSpatieTags($request, $primaryValue, 'detachTag', $tags);
@@ -111,9 +114,9 @@ trait ControllerSpatieTagsTrait
     {
         $model = $this->getSpatieTagModel($request, $primaryValue);
 
-        if (!is_null($this->gate) && method_exists($this->gate, 'detachTag')) {
-            $this->authorize('detachTag', $this->model);
-        }
+//        if (!is_null($this->gate) && method_exists($this->gate, 'detachTag')) {
+//            $this->authorize('detachTag', $this->model);
+//        }
         if (!is_null($this->gate) && method_exists($this->gate, 'attachTag')) {
             $this->authorize('attachTag', $this->model);
         }
