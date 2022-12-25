@@ -59,8 +59,8 @@ trait ControllerDeleteTrait
         $model = $query->where($this->primaryKey, $primaryValue)
             ->firstOrFail();
 
-        if (!is_null($this->gate) && method_exists($this->gate, 'view')) {
-            $this->authorize('view', $model);
+        if (!is_null($this->gate) && method_exists($this->gate, 'delete')) {
+            $this->authorize('delete', $model);
         }
 
         $this->beforeDeleted($request, $model);
