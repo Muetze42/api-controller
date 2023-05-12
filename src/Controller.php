@@ -122,7 +122,7 @@ class Controller extends BaseController
         if (!$this->model) {
             $this->model = __CLASS__ != get_class($this) ?
                 $this->modelNamespace.str_replace('Controller', '', class_basename(get_class($this))) :
-            $this->findModel($request);
+                $this->findModel($request);
         }
 
         if (!$this->resource) {
@@ -137,9 +137,13 @@ class Controller extends BaseController
         $this->gate = Gate::getPolicyFor($this->model);
     }
 
-    protected function findModel(Request $request)
+    protected function findModel(Request $request): ?string
     {
-        $routeName = $request->route()->getName();
+        $route = $request->route();
+        if (!$route) {
+            return null;
+        }
+        $routeName = $route->getName();
 
         if (!$routeName) {
             return null;
