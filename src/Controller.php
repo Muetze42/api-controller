@@ -9,6 +9,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Str;
 
 class Controller extends BaseController
 {
@@ -46,14 +47,14 @@ class Controller extends BaseController
      *
      * @var string
      */
-    protected string $modelNamespace = '\App\Models\\';
+    protected string $modelNamespace = '\\App\\Models\\';
 
     /**
      * Resources Namespace
      *
      * @var string
      */
-    protected string $resourceNamespace = '\App\Http\Resources\\';
+    protected string $resourceNamespace = '\\App\Http\\Resources\\';
 
     /**
      * @var array
@@ -116,14 +117,17 @@ class Controller extends BaseController
      */
     protected string $orderDirection = 'asc';
 
-    public function __construct()
+    public function __construct(Request $request)
     {
         if (!$this->model) {
-            $this->model = $this->modelNamespace.str_replace('Controller', '', class_basename(get_class($this)));
+            $this->model = __CLASS__ != get_class($this) ?
+                $this->modelNamespace.str_replace('Controller', '', class_basename(get_class($this))) :
+            $this->findModel($request);
         }
 
         if (!$this->resource) {
-            $this->resource = $this->resourceNamespace.str_replace('Controller', '', class_basename(get_class($this))).'Resource';
+            $resource = $this->resourceNamespace.str_replace('Controller', '', class_basename(get_class($this))).'Resource';
+            $this->resource = class_exists($resource) ? $resource : config('api.fallback-resource');
         }
 
         if (!$this->pageName) {
@@ -131,6 +135,26 @@ class Controller extends BaseController
         }
 
         $this->gate = Gate::getPolicyFor($this->model);
+    }
+
+    protected function findModel(Request $request)
+    {
+        $routeName = $request->route()->getName();
+
+        if (!$routeName) {
+            return null;
+        }
+
+        $parts = array_reverse(explode('.', $routeName));
+        if (count($parts) < 2) {
+            return null;
+        }
+
+        if (!in_array($parts[0], ['index', 'store', 'show', 'update', 'destroy'])) {
+            return null;
+        }
+
+        return $this->modelNamespace.Str::singular(Str::studly($parts[1]));
     }
 
     /**
