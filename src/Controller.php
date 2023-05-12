@@ -162,7 +162,7 @@ class Controller extends BaseController
             return null;
         }
 
-        $config = config('api.controller-less.users.'.$parts[0], []);
+        $config = config('api.controller-less.'.$parts[1].'.'.$parts[0], []);
 
         foreach ($config as $key => $value) {
             if (isset($this->{$key})) {

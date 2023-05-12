@@ -12,10 +12,22 @@ trait ControllerIndexTrait
      * @var array
      */
     protected array $indexFilter = [];
+
     /**
      * @var array
      */
     protected array $indexLikeFilter = [];
+
+    /**
+     * @var array
+     */
+    protected array $indexHasFilter = [];
+
+    /**
+     * @var array
+     */
+    protected array $indexHasLikeFilter = [];
+
     /**
      * @var array
      */
@@ -56,12 +68,42 @@ trait ControllerIndexTrait
         $filters = $request->input('filter');
         foreach ($this->indexFilter as $key) {
             if (is_array($filters) && array_key_exists($key, $filters)) {
-                $query = $query->where($key, $filters[$key]);
+                $query->where($key, $filters[$key]);
             }
         }
         foreach ($this->indexLikeFilter as $key) {
             if (is_array($filters) && array_key_exists($key, $filters)) {
-                $query = $query->where($key, 'like', '%'.$filters[$key].'%');
+                $query->where($key, 'like', '%'.$filters[$key].'%');
+            }
+        }
+
+        $filters = $request->input('has');
+
+        foreach ($this->indexHasFilter as $key) {
+            if (is_array($filters) && array_key_exists($key, $filters)) {
+                $parts = explode('.', $key);
+
+                $relation = $parts[0];
+                $column = $parts[1];
+                $value = $filters[$key];
+
+                $query->whereHas($relation, function (Builder $query) use ($column, $value) {
+                    $query->where($column, $value);
+                });
+            }
+        }
+
+        foreach ($this->indexHasLikeFilter as $key) {
+            if (is_array($filters) && array_key_exists($key, $filters)) {
+                $parts = explode('.', $key);
+
+                $relation = $parts[0];
+                $column = $parts[1];
+                $value = $filters[$key];
+
+                $query->whereHas($relation, function (Builder $query) use ($column, $value) {
+                    $query->where($column, 'LIKE', '%'.$value.'%');
+                });
             }
         }
 
