@@ -158,6 +158,14 @@ class Controller extends BaseController
             return null;
         }
 
+        $config = config('api.controller-less.users.'.$parts[0], []);
+
+        foreach ($config as $key => $value) {
+            if (isset($this->{$key})) {
+                $this->{$key} = $value;
+            }
+        }
+
         return $this->modelNamespace.Str::singular(Str::studly($parts[1]));
     }
 
