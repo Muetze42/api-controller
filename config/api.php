@@ -7,5 +7,5 @@ return [
         'max'     => 100,
     ],
     'pageName' => 'page',
-    'fallback-resource' => \NormanHuth\HelpersLaravel\App\Http\Resources\Json\JsonResource::class,
+    'fallback-resource' => \Illuminate\Http\Resources\Json\JsonResource::class,
 ];
