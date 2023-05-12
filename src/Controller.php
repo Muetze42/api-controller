@@ -119,6 +119,10 @@ class Controller extends BaseController
 
     public function __construct(Request $request)
     {
+        if ($locale = config('api.locale')) {
+            app()->setLocale($locale);
+        }
+
         if (!$this->model) {
             $this->model = __CLASS__ != get_class($this) ?
                 $this->modelNamespace.str_replace('Controller', '', class_basename(get_class($this))) :
