@@ -9,9 +9,9 @@ use Exception;
 trait ControllerRestoreTrait
 {
     /**
-     * This action is performed before the update request
+     * This action is performed before the update request.
      *
-     * @param Request $request
+     * @param \Illuminate\Http\Request $request
      */
     protected function beforeRestoreAction(Request $request): void
     {
@@ -19,11 +19,11 @@ trait ControllerRestoreTrait
     }
 
     /**
-     * Perform Action After Resource Is Restored
-     * Do Image Uploads etc.
+     * Perform Action After Resource Is Restored. (Image Uploads etc)
      *
-     * @param Request $request
-     * @param mixed $model
+     * @param \Illuminate\Http\Request $request
+     * @param mixed                    $model
+     *
      * @return void
      */
     protected function afterRestored(Request $request, mixed $model): void
@@ -32,10 +32,9 @@ trait ControllerRestoreTrait
     }
 
     /**
-     * @param Request $request
-     * @param $primaryValue
-     * @throws AuthorizationException
-     * @throws Exception
+     * @param \Illuminate\Http\Request $request
+     * @param                          $primaryValue
+     *
      * @return mixed
      */
     public function restore(Request $request, $primaryValue): mixed

@@ -9,9 +9,11 @@ use Illuminate\Support\Str;
 trait ControllerMorphTrait
 {
     /**
-     * This action is performed before the update request
+     * This action is performed before the update request.
      *
-     * @param Request $request
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return void
      */
     protected function morphAction(Request $request): void
     {
@@ -27,7 +29,7 @@ trait ControllerMorphTrait
     }
 
     /**
-     * Process only specific keys in a request
+     * Process only specific keys in a request.
      *
      * @return array
      */
@@ -37,10 +39,10 @@ trait ControllerMorphTrait
     }
 
     /**
-     * @param Request $request
-     * @param $primaryValue
-     * @param string $relation
-     * @throws AuthorizationException
+     * @param \Illuminate\Http\Request $request
+     * @param                          $primaryValue
+     * @param string                   $relation
+     *
      * @return mixed
      */
     public function morph(Request $request, $primaryValue, string $relation): mixed
@@ -64,8 +66,8 @@ trait ControllerMorphTrait
 
         $check = Str::ucfirst(Str::singular($relation));
 
-        if (!is_null($this->gate) && method_exists($this->gate, 'add'.$check)) {
-            $this->authorize('add'.$check, $model);
+        if (!is_null($this->gate) && method_exists($this->gate, 'add' . $check)) {
+            $this->authorize('add' . $check, $model);
         }
 //        if (!is_null($this->gate) && method_exists($this->gate, 'update')) {
 //            $this->authorize('update', $model);

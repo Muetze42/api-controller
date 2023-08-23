@@ -7,9 +7,8 @@ use Illuminate\Http\Request;
 
 trait ControllerUpdateTrait
 {
-
     /**
-     * Validation Rules For Store Request
+     * Validation Rules For Store Request.
      *
      * @return array
      */
@@ -19,7 +18,7 @@ trait ControllerUpdateTrait
     }
 
     /**
-     * Process only specific keys in a update request
+     * Process only specific keys in an update request.
      *
      * @return array
      */
@@ -29,11 +28,11 @@ trait ControllerUpdateTrait
     }
 
     /**
-     * Perform Action After Resource Is Updated
-     * Do Image Uploads etc.
+     * Perform Action After Resource Is Updated. (Image Uploads etc)
      *
-     * @param Request $request
-     * @param mixed $model
+     * @param \Illuminate\Http\Request $request
+     * @param mixed                    $model
+     *
      * @return void
      */
     protected function afterUpdated(Request $request, mixed $model): void
@@ -42,9 +41,11 @@ trait ControllerUpdateTrait
     }
 
     /**
-     * This action is performed before the update request
+     * This action is performed before the update request.
      *
-     * @param Request $request
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return void
      */
     protected function beforeUpdateAction(Request $request): void
     {
@@ -52,17 +53,17 @@ trait ControllerUpdateTrait
     }
 
     /**
-     * @param Request $request
-     * @param $primaryValue
+     * @param \Illuminate\Http\Request $request
+     * @param                          $primaryValue
+     *
      * @return mixed
-     * @throws AuthorizationException
      */
     public function update(Request $request, $primaryValue): mixed
     {
         $this->beforeAction($request);
         $this->beforeUpdateAction($request);
 
-        $statusModel = new $this->model;
+        $statusModel = new $this->model();
         if (is_string($this->model)) {
             $this->model = app($this->model);
         }
@@ -88,7 +89,8 @@ trait ControllerUpdateTrait
 
         $request->validate($rules);
 
-        $only = empty($this->only()) || empty($this->onlyUpdate()) ? $statusModel->getFillable() : array_merge($this->only(), $this->onlyUpdate());
+        $only = empty($this->only()) || empty($this->onlyUpdate()) ?
+            $statusModel->getFillable() : array_merge($this->only(), $this->onlyUpdate());
 
         $model->update($request->only($only));
 

@@ -13,7 +13,7 @@ trait ControllerStoreTrait
     protected string $storeAction = 'firstOrCreate';
 
     /**
-     * Validation Rules For Store Request
+     * Validation Rules For Store Request.
      *
      * @return array
      */
@@ -23,11 +23,11 @@ trait ControllerStoreTrait
     }
 
     /**
-     * Perform Action After Resource Is Stored
-     * Do Image Uploads etc.
+     * Perform Action After Resource Is Stored. (Image Uploads etc)
      *
-     * @param Request $request
-     * @param mixed $model
+     * @param \Illuminate\Http\Request $request
+     * @param mixed                    $model
+     *
      * @return void
      */
     protected function afterStored(Request $request, mixed $model): void
@@ -36,7 +36,7 @@ trait ControllerStoreTrait
     }
 
     /**
-     * Process only specific keys in a store request
+     * Process only specific keys in a store request.
      *
      * @return array
      */
@@ -46,8 +46,9 @@ trait ControllerStoreTrait
     }
 
     /**
-     * @param Request $request
-     * @return void|null
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return null
      */
     protected function storeModelIncludeRelation(Request $request)
     {
@@ -55,9 +56,11 @@ trait ControllerStoreTrait
     }
 
     /**
-     * This action is performed before the show request
+     * This action is performed before the show request.
      *
-     * @param Request $request
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return void
      */
     protected function beforeStoreAction(Request $request): void
     {
@@ -65,9 +68,9 @@ trait ControllerStoreTrait
     }
 
     /**
-     * @param Request $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return mixed
-     * @throws AuthorizationException
      */
     public function store(Request $request): mixed
     {
@@ -84,9 +87,10 @@ trait ControllerStoreTrait
 
         $model = $this->storeModelIncludeRelation($request);
         $action = $this->storeAction;
-        $statusModel = new $this->model;
+        $statusModel = new $this->model();
 
-        $only = empty($this->only()) || empty($this->onlyStore()) ? $statusModel->getFillable() : array_merge($this->only(), $this->onlyStore());
+        $only = empty($this->only()) || empty($this->onlyStore()) ? $statusModel->getFillable() :
+            array_merge($this->only(), $this->onlyStore());
 
         $requestData = $request->only($only);
 

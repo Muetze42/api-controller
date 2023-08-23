@@ -12,9 +12,11 @@ use Symfony\Component\HttpFoundation\Response as HttpResponse;
 trait ControllerDeleteTrait
 {
     /**
-     * This action is performed before the update request
+     * This action is performed before the update request.
      *
-     * @param Request $request
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return void
      */
     protected function beforeDestroyAction(Request $request): void
     {
@@ -22,11 +24,11 @@ trait ControllerDeleteTrait
     }
 
     /**
-     * Perform Action Before Resource Deleted
-     * Delete Images etc
+     * Perform Action Before Resource Deleted. (Delete Images etc)
      *
-     * @param Request $request
-     * @param mixed $model
+     * @param \Illuminate\Http\Request $request
+     * @param mixed                    $model
+     *
      * @return void
      */
     protected function beforeDeleted(Request $request, mixed $model): void
@@ -35,10 +37,10 @@ trait ControllerDeleteTrait
     }
 
     /**
-     * @param Request $request
-     * @param $primaryValue
-     * @throws AuthorizationException
-     * @return Response|Application|ResponseFactory
+     * @param \Illuminate\Http\Request $request
+     * @param                          $primaryValue
+     *
+     * @return \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
      */
     public function destroy(Request $request, $primaryValue): Response|Application|ResponseFactory
     {

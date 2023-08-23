@@ -49,9 +49,10 @@ trait ControllerIndexTrait
     protected array $autoloadRelationsIndex = [];
 
     /**
-     * @param Builder $query
-     * @param Request $request
-     * @return Builder
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param \Illuminate\Http\Request              $request
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
      */
     protected function indexQuery(Builder $query, Request $request): Builder
     {
@@ -59,9 +60,10 @@ trait ControllerIndexTrait
     }
 
     /**
-     * @param Request $request
-     * @param Builder $query
-     * @return Builder
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param \Illuminate\Http\Request              $request
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
      */
     protected function indexFilter(Builder $query, Request $request): Builder
     {
@@ -73,7 +75,7 @@ trait ControllerIndexTrait
         }
         foreach ($this->indexLikeFilter as $key) {
             if (is_array($filters) && array_key_exists($key, $filters)) {
-                $query->where($key, 'like', '%'.$filters[$key].'%');
+                $query->where($key, 'like', '%' . $filters[$key] . '%');
             }
         }
 
@@ -102,7 +104,7 @@ trait ControllerIndexTrait
                 $value = $filters[$key];
 
                 $query->whereHas($relation, function (Builder $query) use ($column, $value) {
-                    $query->where($column, 'LIKE', '%'.$value.'%');
+                    $query->where($column, 'LIKE', '%' . $value . '%');
                 });
             }
         }
@@ -111,8 +113,8 @@ trait ControllerIndexTrait
     }
 
     /**
-     * @param Request $request
-     * @throws AuthorizationException
+     * @param \Illuminate\Http\Request $request
+     *
      * @return mixed
      */
     public function index(Request $request): mixed
@@ -148,7 +150,8 @@ trait ControllerIndexTrait
     }
 
     /**
-     * @param Request $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return array
      */
     protected function indexRelationships(Request $request): array
@@ -158,8 +161,10 @@ trait ControllerIndexTrait
         $array = [];
 
         foreach ($requestRelations as $relation) {
-            if (in_array($relation, $this->indexAllowInclude) ||
-                in_array($relation, $this->allowInclude)) {
+            if (
+                in_array($relation, $this->indexAllowInclude) ||
+                in_array($relation, $this->allowInclude)
+            ) {
                 $array[] = $relation;
             }
         }
@@ -172,9 +177,11 @@ trait ControllerIndexTrait
     }
 
     /**
-     * This action is performed before the index request
+     * This action is performed before the index request.
      *
-     * @param Request $request
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return void
      */
     protected function beforeIndexAction(Request $request): void
     {

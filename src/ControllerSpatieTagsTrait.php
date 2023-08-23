@@ -14,14 +14,18 @@ trait ControllerSpatieTagsTrait
     protected mixed $spatieTagsType = null;
 
     /**
-     * @param Request $request
-     * @param $primaryValue
-     * @param array|string|null $tags
-     * @throws AuthorizationException
-     * @return Builder|Model|Collection
+     * @param \Illuminate\Http\Request $request
+     * @param                          $primaryValue
+     * @param array|string|null        $tags
+     *
+     * @throws \Exception
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|\Illuminate\Support\Collection
      */
-    public function attachSpatieTags(Request $request, $primaryValue, array|string $tags = null): Builder|Model|Collection
-    {
+    public function attachSpatieTags(
+        Request $request,
+        $primaryValue,
+        array|string $tags = null
+    ): Builder|Model|Collection {
 //        if (!is_null($this->gate) && method_exists($this->gate, 'addTag')) {
 //            $this->authorize('addTag', $this->model);
 //        }
@@ -36,14 +40,18 @@ trait ControllerSpatieTagsTrait
     }
 
     /**
-     * @param Request $request
-     * @param $primaryValue
-     * @param array|string|null $tags
-     * @throws AuthorizationException
-     * @return Builder|Model|Collection
+     * @param \Illuminate\Http\Request $request
+     * @param                          $primaryValue
+     * @param array|string|null        $tags
+     *
+     * @throws \Exception
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|\Illuminate\Support\Collection
      */
-    public function detachSpatieTags(Request $request, $primaryValue, array|string|null $tags = null): Builder|Model|Collection
-    {
+    public function detachSpatieTags(
+        Request $request,
+        $primaryValue,
+        array|string|null $tags = null
+    ): Builder|Model|Collection {
 //        if (!is_null($this->gate) && method_exists($this->gate, 'detachTag')) {
 //            $this->authorize('detachTag', $this->model);
 //        }
@@ -55,9 +63,10 @@ trait ControllerSpatieTagsTrait
     }
 
     /**
-     * @param Request $request
-     * @param $primaryValue
-     * @return Builder|Model
+     * @param \Illuminate\Http\Request $request
+     * @param                          $primaryValue
+     *
+     * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Builder
      */
     protected function getSpatieTagModel(Request $request, $primaryValue): Model|Builder
     {
@@ -79,16 +88,20 @@ trait ControllerSpatieTagsTrait
     }
 
     /**
-     * @param Request $request
-     * @param $primaryValue
-     * @param $method
-     * @param array|string|null $tags
-     * @throws AuthorizationException
-     * @throws Exception
-     * @return Builder|Model|Collection
+     * @param \Illuminate\Http\Request $request
+     * @param                          $primaryValue
+     * @param                          $method
+     * @param array|string|null        $tags
+     *
+     * @throws \Exception
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|\Illuminate\Support\Collection
      */
-    public function handleSpatieTags(Request $request, $primaryValue, $method, array|string|null $tags = null): Builder|Model|Collection
-    {
+    public function handleSpatieTags(
+        Request $request,
+        $primaryValue,
+        $method,
+        array|string|null $tags = null
+    ): Builder|Model|Collection {
         $model = $this->getSpatieTagModel($request, $primaryValue);
 
         $tags = $this->getTagsArray($request, $tags);
@@ -103,15 +116,18 @@ trait ControllerSpatieTagsTrait
     }
 
     /**
-     * @param Request $request
-     * @param $primaryValue
-     * @param array|string|null $tags
-     * @throws AuthorizationException
-     * @throws Exception
-     * @return Builder|Model|Collection
+     * @param \Illuminate\Http\Request $request
+     * @param                          $primaryValue
+     * @param array|string|null        $tags
+     *
+     * @throws \Exception
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|\Illuminate\Support\Collection
      */
-    public function syncSpatieTags(Request $request, $primaryValue, array|string|null $tags = null): Builder|Model|Collection
-    {
+    public function syncSpatieTags(
+        Request $request,
+        $primaryValue,
+        array|string|null $tags = null
+    ): Builder|Model|Collection {
         $model = $this->getSpatieTagModel($request, $primaryValue);
 
 //        if (!is_null($this->gate) && method_exists($this->gate, 'detachTag')) {
@@ -144,9 +160,10 @@ trait ControllerSpatieTagsTrait
     }
 
     /**
-     * @param Request $request
-     * @param string|array|null $tags
-     * @throws Exception
+     * @param \Illuminate\Http\Request $request
+     * @param string|array|null        $tags
+     *
+     * @throws \Exception
      * @return array
      */
     protected function getTagsArray(Request $request, string|array|null $tags): array

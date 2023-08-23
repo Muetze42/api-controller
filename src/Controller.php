@@ -13,44 +13,44 @@ use Illuminate\Support\Str;
 
 class Controller extends BaseController
 {
-    use AuthorizesRequests,
-        DispatchesJobs,
-        ValidatesRequests,
-        ControllerMorphTrait,
-        ControllerAttachTrait,
-        ControllerDeleteTrait,
-        ControllerSpatieTagsTrait,
-        ControllerDetachTrait,
-        ControllerForceDeleteTrait,
-        ControllerRestoreTrait,
-        ControllerIndexTrait,
-        ControllerShowTrait,
-        ControllerStoreTrait,
-        ControllerUpdateTrait;
+    use AuthorizesRequests;
+    use DispatchesJobs;
+    use ValidatesRequests;
+    use ControllerMorphTrait;
+    use ControllerAttachTrait;
+    use ControllerDeleteTrait;
+    use ControllerSpatieTagsTrait;
+    use ControllerDetachTrait;
+    use ControllerForceDeleteTrait;
+    use ControllerRestoreTrait;
+    use ControllerIndexTrait;
+    use ControllerShowTrait;
+    use ControllerStoreTrait;
+    use ControllerUpdateTrait;
 
     /**
-     * The Model Instance
+     * The Model Instance.
      *
      * @var mixed|string|null
      */
     protected mixed $model = null;
 
     /**
-     * The Resource Instance
+     * The Resource Instance.
      *
      * @var mixed|string|null
      */
     protected mixed $resource = null;
 
     /**
-     * Models Namespace
+     * Models Namespace.
      *
      * @var string
      */
     protected string $modelNamespace = '\\App\\Models\\';
 
     /**
-     * Resources Namespace
+     * Resources Namespace.
      *
      * @var string
      */
@@ -79,7 +79,7 @@ class Controller extends BaseController
     protected ?int $limit = null;
 
     /**
-     * Per Page Max Limit
+     * Per Page Max Limit.
      *
      * @var int|null
      */
@@ -91,7 +91,7 @@ class Controller extends BaseController
     protected array $allowInclude = [];
 
     /**
-     * Thr Gate Instance
+     * Thr Gate Instance.
      *
      * @var mixed
      */
@@ -125,12 +125,13 @@ class Controller extends BaseController
 
         if (!$this->model) {
             $this->model = __CLASS__ != get_class($this) ?
-                $this->modelNamespace.str_replace('Controller', '', class_basename(get_class($this))) :
+                $this->modelNamespace . str_replace('Controller', '', class_basename(get_class($this))) :
                 $this->findModel($request);
         }
 
         if (!$this->resource) {
-            $resource = $this->resourceNamespace.str_replace('Controller', '', class_basename(get_class($this))).'Resource';
+            $resource = $this->resourceNamespace .
+                str_replace('Controller', '', class_basename(get_class($this))) . 'Resource';
             $this->resource = class_exists($resource) ? $resource : config('api.fallback-resource');
         }
 
@@ -162,7 +163,7 @@ class Controller extends BaseController
             return null;
         }
 
-        $config = config('api.controller-less.'.$parts[1].'.'.$parts[0], []);
+        $config = config('api.controller-less.' . $parts[1] . '.' . $parts[0], []);
 
         foreach ($config as $key => $value) {
             if (isset($this->{$key})) {
@@ -170,13 +171,15 @@ class Controller extends BaseController
             }
         }
 
-        return $this->modelNamespace.Str::singular(Str::studly($parts[1]));
+        return $this->modelNamespace . Str::singular(Str::studly($parts[1]));
     }
 
     /**
-     * This action is performed before each request
+     * This action is performed before each request.
      *
-     * @param Request $request
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return void
      */
     protected function beforeAction(Request $request): void
     {
@@ -185,6 +188,7 @@ class Controller extends BaseController
 
     /**
      * @param Request $request
+     *
      * @return int
      */
     protected function getLimit(Request $request): int
@@ -209,14 +213,15 @@ class Controller extends BaseController
     }
 
     /**
-     * @param Builder $query
-     * @param Request $request
-     * @return Builder
-     * @noinspection PhpUndefinedMethodInspection
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param \Illuminate\Http\Request              $request
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
      */
     protected function trashedQuery(Builder $query, Request $request): Builder
     {
         if (in_array('Illuminate\Database\Eloquent\SoftDeletes', class_uses($this->model))) {
+            /* @var \Illuminate\Database\Eloquent\SoftDeletes $query */
             if ($request->input('withTrashed')) {
                 return $query->withTrashed();
             } elseif ($request->input('onlyTrashed')) {
@@ -228,11 +233,11 @@ class Controller extends BaseController
     }
 
     /**
-     * Perform Action After Resource Is Stored Or Updated
-     * Do Image Uploads etc.
+     * Perform Action After Resource Is Stored Or Updated. (Image Uploads etc)
      *
-     * @param Request $request
-     * @param mixed $model
+     * @param \Illuminate\Http\Request $request
+     * @param mixed                    $model
+     *
      * @return void
      */
     protected function afterStoredUpdated(Request $request, mixed $model): void
@@ -249,7 +254,7 @@ class Controller extends BaseController
     }
 
     /**
-     * Validation Rules For Each Request
+     * Validation Rules For Each Request.
      *
      * @return array
      */
@@ -259,7 +264,7 @@ class Controller extends BaseController
     }
 
     /**
-     * Process only specific keys in a request
+     * Process only specific keys in a request.
      *
      * @return array
      */

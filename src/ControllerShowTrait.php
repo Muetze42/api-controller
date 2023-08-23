@@ -27,10 +27,10 @@ trait ControllerShowTrait
     protected array $autoloadRelationsShow = [];
 
     /**
-     * @param Request $request
-     * @param $primaryValue
+     * @param \Illuminate\Http\Request $request
+     * @param                          $primaryValue
+     *
      * @return mixed
-     * @throws AuthorizationException
      */
     public function show(Request $request, $primaryValue): mixed
     {
@@ -63,9 +63,11 @@ trait ControllerShowTrait
     }
 
     /**
-     * This action is performed before the show request
+     * This action is performed before the show request.
      *
-     * @param Request $request
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return void
      */
     protected function beforeShowAction(Request $request): void
     {
@@ -73,9 +75,10 @@ trait ControllerShowTrait
     }
 
     /**
-     * @param Builder $query
-     * @param Request $request
-     * @return Builder
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param \Illuminate\Http\Request              $request
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
      */
     protected function showQuery(Builder $query, Request $request): Builder
     {
@@ -83,7 +86,8 @@ trait ControllerShowTrait
     }
 
     /**
-     * @param Request $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return array
      */
     protected function showRelationships(Request $request): array
@@ -93,8 +97,10 @@ trait ControllerShowTrait
         $array = [];
 
         foreach ($requestRelations as $relation) {
-            if (in_array($relation, $this->showAllowInclude) ||
-                in_array($relation, $this->allowInclude)) {
+            if (
+                in_array($relation, $this->showAllowInclude) ||
+                in_array($relation, $this->allowInclude)
+            ) {
                 $array[] = $relation;
             }
         }

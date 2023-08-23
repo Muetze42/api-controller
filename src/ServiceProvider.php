@@ -14,7 +14,7 @@ class ServiceProvider extends Provider
     public function boot(): void
     {
         $this->publishes([
-            __DIR__.'/../config/api.php' => config_path('api.php'),
+            __DIR__ . '/../config/api.php' => config_path('api.php'),
         ], 'config');
     }
 
@@ -26,7 +26,7 @@ class ServiceProvider extends Provider
     public function register(): void
     {
         $this->mergeConfigFrom(
-            __DIR__.'/../config/api.php', 'api'
+            __DIR__ . '/../config/api.php', 'api'
         );
     }
 }

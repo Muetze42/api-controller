@@ -8,9 +8,11 @@ use Illuminate\Http\Request;
 trait ControllerDetachTrait
 {
     /**
-     * This action is performed before the update request
+     * This action is performed before the update request.
      *
-     * @param Request $request
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return void
      */
     protected function beforeDetachAction(Request $request): void
     {
@@ -26,9 +28,13 @@ trait ControllerDetachTrait
     }
 
     /**
-     * @throws AuthorizationException
+     * @param \Illuminate\Http\Request $request
+     * @param                          $primaryValue
+     * @param string                   $relation
+     *
+     * @return mixed
      */
-    public function detach(Request $request, $primaryValue, string $relation)
+    public function detach(Request $request, $primaryValue, string $relation): mixed
     {
         $this->beforeAction($request);
         $this->beforeDetachAction($request);
